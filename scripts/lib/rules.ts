@@ -26,10 +26,13 @@ export const rules: RuleInfo[] = fs
   .readdirSync(rootDir)
   .sort()
   .map(
-    (filename): RuleInfo => {
+    (filename): RuleInfo | false => {
       const filePath = path.join(rootDir, filename);
       const name = filename.slice(0, -3);
-      const { meta } = require(filePath);
+      const file = require(filePath).default;
+      if (!file) return false;
+
+      const { meta } = file
 
       return {
         filePath,
@@ -41,7 +44,7 @@ export const rules: RuleInfo[] = fs
         ...meta.docs,
       };
     }
-  );
+  ).filter<RuleInfo>((rule): rule is RuleInfo => Boolean(rule));
 
 const ruleTypes: RuleType[] = ['suggestion', 'problem', 'layout'];
 

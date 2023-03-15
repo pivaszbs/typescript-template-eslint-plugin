@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { ESLint } from 'eslint';
-import { pluginId } from './plugin-id';
 import { rules } from './rules';
 
 const filePath = path.resolve(__dirname, '../../src/configs/recommended.ts');

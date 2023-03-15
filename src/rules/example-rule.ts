@@ -1,7 +1,7 @@
 import { Rule } from 'eslint';
 import { Identifier } from 'estree';
 
-export const exampleRule: Rule.RuleModule = {
+const exampleRule: Rule.RuleModule = {
   meta: {
     docs: {
       description: 'An example rule.',
@@ -26,3 +26,5 @@ export const exampleRule: Rule.RuleModule = {
     };
   },
 };
+
+export default exampleRule;
