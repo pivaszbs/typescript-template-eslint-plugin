@@ -3,10 +3,18 @@ import path from 'path';
 import { pluginId } from './lib/plugin-id';
 (() => {
   const ruleId = process.argv[2];
+  const type = process.argv[3];
 
   // Require rule ID.
   if (!ruleId) {
-    console.error('Usage: npm run add-rule <RULE_ID>');
+    console.error('Usage: npm run add-rule <RULE_ID> <RULE_TYPE>');
+    process.exitCode = 1;
+    return;
+  }
+
+  // Require rule type.
+  if (!type) {
+    console.error('Usage: npm run add-rule <RULE_ID> <RULE_TYPE> \n\npossible <RULE_TYPE>: problem | suggestion | layout');
     process.exitCode = 1;
     return;
   }
@@ -47,9 +55,9 @@ import { pluginId } from './lib/plugin-id';
 
   fs.writeFileSync(
     rulePath,
-    `import { TSESLint } from "@typescript-eslint/experimental-utils";
+    `import { Rule } from "eslint";
 
-const rule: TSESLint.RuleModule<string, []> = {
+const rule: Rule.RuleModule = {
   meta: {
     docs: {
       // TODO: write the rule summary.
@@ -63,16 +71,13 @@ const rule: TSESLint.RuleModule<string, []> = {
     messages: {},
     schema: [],
 
-    // TODO: choose the rule type.
-    type: "problem",
-    type: "suggestion",
-    type: "layout",
+    type: "${type}"
   },
-  create(context) {
+  create(context: Rule.RuleContext): Rule.RuleListener {
     const sourceCode = context.getSourceCode();
+    console.log(sourceCode);
     return {};
   },
-  defaultOptions: []
 };
 
 export = rule;
@@ -82,10 +87,17 @@ export = rule;
   fs.writeFileSync(
     testPath,
     `
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import { RuleTester } from "eslint";
 import rule from "../../src/rules/${ruleId}";
 
-new TSESLint.RuleTester().run("${ruleId}", rule, {
+const tester = new RuleTester({
+  parserOptions: {
+      ecmaVersion: 6,
+      sourceType: 'module'
+  }
+});
+
+tester.run("${ruleId}", rule, {
   valid: [],
   invalid: [],
 });
