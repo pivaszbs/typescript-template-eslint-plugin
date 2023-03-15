@@ -63,14 +63,8 @@ const rule: Rule.RuleModule = {
     docs: {
       // TODO: write the rule summary.
       description: "",
-
       recommended: false,
-      url: "",
     },
-
-    messages: {},
-    schema: [],
-
     type: "${type}"
   },
   create(context: Rule.RuleContext): Rule.RuleListener {

@@ -11,7 +11,6 @@ const exampleRule: Rule.RuleModule = {
     messages: {
       disallowExample: "'example' identifier is forbidden.",
     },
-    schema: [],
     type: 'suggestion',
   },
 
