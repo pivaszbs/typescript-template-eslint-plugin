@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { pluginId } from './lib/plugin-id';
-(() => {
+import { camelize } from './camilize';
+
+const addRule = () => {
   const ruleId = process.argv[2];
   const type = process.argv[3];
 
@@ -57,7 +59,7 @@ import { pluginId } from './lib/plugin-id';
     rulePath,
     `import { Rule } from "eslint";
 
-const rule: Rule.RuleModule = {
+export const ${camelize(ruleId)}: Rule.RuleModule = {
   meta: {
     docs: {
       // TODO: write the rule summary.
@@ -79,8 +81,6 @@ const rule: Rule.RuleModule = {
     return {};
   },
 };
-
-export = rule;
 `
   );
 
@@ -103,4 +103,6 @@ tester.run("${ruleId}", rule, {
 });
 `
   );
-})();
+};
+
+addRule();

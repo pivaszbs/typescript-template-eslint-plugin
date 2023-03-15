@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "tsc",
+    "build": "tsup src/index.ts --no-splitting --minify",
     "lint": "run-s lint:ts lint:eslint lint:prettier",
     "lint:ts": "tsc --noEmit",
     "lint:eslint": "eslint '**/*.{js,ts}'",
