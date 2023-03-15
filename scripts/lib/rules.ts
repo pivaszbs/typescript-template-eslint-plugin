@@ -1,7 +1,10 @@
+import { Rule } from 'eslint';
 import fs from 'fs';
 import path from 'path';
 import { pluginId } from './plugin-id';
 const rootDir = path.resolve(__dirname, '../../src/rules/');
+
+type RuleType = 'suggestion' | 'problem' | 'layout';
 
 export type RuleInfo = {
   filePath: string;
@@ -16,7 +19,7 @@ export type RuleInfo = {
 };
 
 export type CategoryInfo = {
-  id: string;
+  id: RuleType;
   rules: RuleInfo[];
 };
 
@@ -41,11 +44,9 @@ export const rules: RuleInfo[] = fs
     }
   );
 
-export const categories: CategoryInfo[] = [
-  'Possible Errors',
-  'Best Practices',
-  'Stylistic Issues',
-].map(
+const ruleTypes: RuleType[] = ['suggestion', 'problem', 'layout'];
+
+export const categories: CategoryInfo[] = ruleTypes.map(
   (id): CategoryInfo => ({
     id,
     rules: rules.filter((rule) => rule.category === id && !rule.deprecated),

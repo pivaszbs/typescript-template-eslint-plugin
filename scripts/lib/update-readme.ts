@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { categories } from './rules';
-import type { RuleInfo, CategoryInfo } from './rules';
+
+import { RuleInfo, CategoryInfo, categories } from './rules';
 
 /**
  * Render a given rule as a table row.
