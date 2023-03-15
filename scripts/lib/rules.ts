@@ -9,7 +9,7 @@ export type RuleInfo = {
   filePath: string;
   id: string;
   name: string;
-  category: string;
+  type: RuleType;
   description: string;
   recommended: boolean;
   deprecated: boolean;
@@ -41,6 +41,7 @@ export const rules: RuleInfo[] = fs
         deprecated: Boolean(meta.deprecated),
         fixable: Boolean(meta.fixable),
         replacedBy: [],
+        type: meta.type,
         ...meta.docs,
       };
     }
@@ -51,6 +52,6 @@ const ruleTypes: RuleType[] = ['suggestion', 'problem', 'layout'];
 export const categories: CategoryInfo[] = ruleTypes.map(
   (id): CategoryInfo => ({
     id,
-    rules: rules.filter((rule) => rule.category === id && !rule.deprecated),
+    rules: rules.filter((rule) => rule.type === id && !rule.deprecated),
   })
 );
