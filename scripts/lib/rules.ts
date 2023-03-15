@@ -1,4 +1,3 @@
-import { Rule } from 'eslint';
 import fs from 'fs';
 import path from 'path';
 import { pluginId } from './plugin-id';

@@ -49,7 +49,7 @@ import { pluginId } from './lib/plugin-id';
     rulePath,
     `import { TSESLint } from "@typescript-eslint/experimental-utils";
 
-const rule: TSESLint.RuleModule<"", []> = {
+const rule: TSESLint.RuleModule<string, []> = {
   meta: {
     docs: {
       // TODO: write the rule summary.

@@ -17,8 +17,11 @@ export = {
   },
 };
 `;
-const lint = new ESLint({ fix: true });
-const lintResults = await lint.lintText(rawContent);
-const content = lintResults[0].output || rawContent;
 
-fs.writeFileSync(filePath, content);
+(async () => {
+  const lint = new ESLint({ fix: true });
+  const lintResults = await lint.lintText(rawContent);
+  const content = lintResults[0].output || rawContent;
+  
+  fs.writeFileSync(filePath, content);    
+})();
